@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site de portail multimedia et notes en ligne sur les mangas et anime">
+    <meta name="keywords" content="mangas, anime, episode, consulter, noter, marquer, ecrire">
+    <meta name="author" content="Soriba">
+    <title>NoteLand</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/module.css">
+    <link rel="stylesheet" href="css/state.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="icon" type="image/png" href="img/NoteLand.png"/>
+    <script src="https://kit.fontawesome.com/e523edf42f.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav_container">
+            <div>
+                <a href="index.html"><img src="img/NoteLand.png" alt="Logo NoteLand" width="15%"></a>
+            </div>
+
+            <div class="search_container">
+                <input type="search" placeholder="Rechercher..." class="search_bar" id="search">
+                <button class="search_btn" id="voice_btn"><i class="fa-solid fa-microphone"></i></button>
+            </div>
+
+
+            <div class="nav_menu">
+                <a href="html/page_en_cours.html">MesProjects</a>
+                <a href="html/page_en_cours.html">Fonctionnalité</a>
+                <a href="html/page_en_cours.html">API</a>
+                <a href="html/page_en_cours.html">Contact</a>
+            </div>
+
+            <div>
+                <a href="html/page_en_cours.html"><i class="fa-solid fa-user xl"></i></a>
+            </div>
+        </div>
+
+            
+    </nav>
+</header>
+
+<main>
+    <div class="res_container">
+        <div id="anime_res" class="anime_res">
+            <p class="p_res">Animes :</p>
+        </div>
+        <div id="mangas_res" class="mangas_res">
+            <p  class="p_res">Mangas :</p>
+        </div>
+        <div id="characters_res" class="characters_res">
+            <p  class="p_res">Characters :</p>
+        </div>
+    </div>
+
+
+
+    <h1>Bienvenue sur NoteLand !</h1>
+    <h2>Ici tu peux etre a jour sur les derniere actualité du mangas et de l'anime ou marqué les moments preferé !</h2>
+
+    <div class="carousel-container" id="carousel-container">
+        <div class="carousel">
+            <div class="item active">
+                <a href="html/details.html"><img src="img/friren.jpg" alt="sousou no friren" /></a>
+                <p class="caption">Sousou no Frieren</p>
+            </div>
+            <div class="item">
+                <img src="img/berserk.jpg" alt="Berserk" />
+                <p class="caption">Berserk</p>
+            </div>
+            <div class="item">
+                <img src="img/Hiroshi.jpg" alt="Hiroshi Kamiya" />
+                <p class="caption">"Hiroshi Kamiya"</p>
+            </div>
+            <div class="item">
+                <img src="img/lelouch.png" alt="Lelouch Lamperouge" />
+                <p class="caption">Lelouch Lamperouge</p>
+            </div>
+            <div class="item">
+                <img src="img/revewimg.jpg" alt="IS: Infinite Stratos 2" />
+                <p class="caption">IS: Infinite Stratos 2</p>
+            </div>
+        </div>
+        <button class="btn prev">&#10096;</button>
+        <button class="btn next">&#10097;</button>
+        <div class="dots"></div>
+    </div>
+
+    <h3 style="text-align: center; margin-top: 2rem">Retrouvez une varieté de chose dans le theme des animé/mangas dans la bar de recherche pour tout autre choses !!!</h3>
+    <h3 style="text-align: center">ou</h3>
+    <h3 style="text-align: center">Consulter les rubriques au dessus pour plus ! </h3>
+</main>
+
+<footer>
+    <div class="footer_container">
+        <a href="html/page_en_cours.html">About</a>
+        <a href="html/page_en_cours.html">Authentification</a>
+        <a href="html/page_en_cours.html">Fonctionnalité</a>
+        <a href="html/page_en_cours.html">API</a>
+        <a href="html/page_en_cours.html">Contact</a>
+    </div>
+    <p style="margin-top: 1rem">&copy; NoteLand 2024</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const p_res = document.querySelectorAll('.p_res');
+        const mangas_res = document.getElementById('mangas_res');
+        const anime_res = document.getElementById('anime_res');
+        const characters_res = document.getElementById('characters_res');
+        const search = document.getElementById('search');
+        let timer;
+        const voice_btn = document.getElementById('voice_btn');
+
+
+
+        async function AnimeSearch(resu){
+            try{
+                const res = await fetch(`https://api.jikan.moe/v4/anime?q=${resu}`);
+                let data = await res.json();
+                data = data.data
+                
+                data.slice(0,5).forEach((anime) =>{
+                    anime_res.innerHTML += `<div ><a href="html/detailsAnimes.html?id=${anime.mal_id}" style="color: black;"><img src="${anime.images.jpg.image_url}" width="70" height="95"><p>${anime.title}</p></a></div>`;
+                })
+            }catch(err){
+                console.log(err.message);
+            }
+
+
+        }
+
+
+        async function MangasSearch(resu){
+            try{
+                const res = await fetch(`https://api.jikan.moe/v4/manga?q=${resu}`);
+                let data = await res.json();
+                data = data.data
+                data.slice(0,5).forEach((manga) =>{
+                    mangas_res.innerHTML += `<div><a href="html/detailMangas.html?id=${manga.mal_id}" style="color: black;"><img src="${manga.images.jpg.image_url}" width="70" height="95"><p>${manga.title}</p></a></div>`;
+                })
+            }catch(err){
+                console.log(err.message);
+            }
+
+
+        }
+
+        async function charactersSearch(resu){
+            try{
+                const res = await fetch(`https://api.jikan.moe/v4/characters?q=${resu}`);
+                let data = await res.json();
+                data = data.data
+                data.slice(0,5).forEach((character) =>{
+                    console.log(character);
+                    characters_res.innerHTML += `<div><a href="html/detailsCharacters.html?id=${character.mal_id}" style="color: black;"><img src="${character.images.jpg.image_url}" width="70" height="95"><p>${character.name}</p></a></div>`;
+                })
+            }catch(err){
+                console.log(err.message);
+            }
+
+
+        }
+
+        function initializeVoiceSearch() {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert('la recherche  vocal est pas pris en  charge');
+                return;
+            }
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'fr-FR';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            voice_btn.addEventListener('click', () => {
+                recognition.start();
+                updateVoiceButtonState("listening")
+            })
+            recognition.addEventListener('end', () => {
+                updateVoiceButtonState("idle")
+            })
+
+            recognition.addEventListener('result', (e) => {
+                const speechResult = e.results[0][0].transcript
+                search.value = speechResult;
+                AnimeSearch(speechResult)
+            })
+
+            recognition.addEventListener('error', (e) => {
+                console.error("Erreur de reconnaissance vocal" ,e.error);
+                updateVoiceButtonState("idle")
+                alert("erreur de la reconnaissance vocal, veuillez ressayer");
+            })
+
+        }
+
+        function updateVoiceButtonState(state) {
+            try{
+                if (state === "listening") {
+                    voice_btn.disabled = true;
+                    voice_btn.innerHTML = "<i class=\"fa-solid fa-microphone\"> En ecoute ...";
+                }else {
+                    voice_btn.disabled = false;
+                    voice_btn.innerHTML = "<i class=\"fa-solid fa-microphone\">";
+                }
+            }catch (error) {
+                console.log(error.message);
+            }
+        }
+        initializeVoiceSearch();
+
+        search.addEventListener('input', () => {
+                    const search_resul = search.value;
+                    clearTimeout(timer);
+                    timer = setTimeout(()=>{
+                        if (search_resul.length > 0){
+                            p_res.forEach((item) =>{
+                                item.style.display = 'inline';
+                            })
+
+                            AnimeSearch(search_resul);
+                            MangasSearch(search_resul)
+                            charactersSearch(search_resul)
+                        }else{
+                            anime_res.innerHTML = ``
+                            mangas_res.innerHTML = ``
+                            characters_res.innerHTML = ``
+                        }
+
+                    }, 3000);
+
+
+                })
+
+        let carousel = document.querySelector(".carousel");
+        let items = carousel.querySelectorAll(".item");
+        let dotsContainer = document.querySelector(".dots");
+
+        // Insert dots into the DOM
+        items.forEach((_, index) => {
+            let dot = document.createElement("span");
+            dot.classList.add("dot");
+            if (index === 0) dot.classList.add("active");
+            dot.dataset.index = index;
+            dotsContainer.appendChild(dot);
+        });
+
+        let dots = document.querySelectorAll(".dot");
+
+        // Function to show a specific item
+        function showItem(index) {
+            items.forEach((item, idx) => {
+                item.classList.remove("active");
+                dots[idx].classList.remove("active");
+                if (idx === index) {
+                    item.classList.add("active");
+                    dots[idx].classList.add("active");
+                }
+            });
+        }
+
+        // Event listeners for buttons
+        document.querySelector(".prev").addEventListener("click", () => {
+            let index = [...items].findIndex((item) =>
+                item.classList.contains("active")
+            );
+            showItem((index - 1 + items.length) % items.length);
+        });
+
+        document.querySelector(".next").addEventListener("click", () => {
+            let index = [...items].findIndex((item) =>
+                item.classList.contains("active")
+            );
+            showItem((index + 1) % items.length);
+        });
+
+        // Event listeners for dots
+        dots.forEach((dot) => {
+            dot.addEventListener("click", () => {
+                let index = parseInt(dot.dataset.index);
+                showItem(index);
+            });
+        });
+
+    })
+</script>
+</body>
+</html>

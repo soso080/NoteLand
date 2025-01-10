@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site de portail multimedia et notes en ligne sur les mangas et anime">
+    <meta name="keywords" content="mangas, anime, episode, consulter, noter, marquer, ecrire">
+    <meta name="author" content="Soriba">
+    <title>NoteLand || Details</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/module.css">
+    <link rel="stylesheet" href="../css/state.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="icon" type="image/png" href="../img/NoteLand.png"/>
+    <script src="https://kit.fontawesome.com/e523edf42f.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav_container">
+            <div>
+                <a href="../index.html"><img src="../img/NoteLand.png" alt="Logo NoteLand" width="15%"></a>
+            </div>
+
+            <div class="search_container">
+                <input type="search" placeholder="Rechercher..." class="search_bar">
+                <button class="search_btn"><i class="fa-solid fa-microphone"></i></button>
+            </div>
+
+            <div class="nav_menu">
+                <a href="page_en_cours.html">MesProjects</a>
+                <a href="page_en_cours.html">Fonctionnalité</a>
+                <a href="page_en_cours.html">API</a>
+                <a href="page_en_cours.html">Contact</a>
+            </div>
+
+            <div>
+                <a href="page_en_cours.html"><i class="fa-solid fa-user"></i></a>
+            </div>
+        </div>
+
+
+    </nav>
+</header>
+
+
+<main>
+<div id="container_detail" style="display: flex; margin-top: 2rem">
+
+</div>
+
+    <div>
+        -------------
+    </div>
+</main>
+
+
+
+<footer>
+    <div class="footer_container">
+        <a href="page_en_cours.html">About</a>
+        <a href="page_en_cours.html">Authentification</a>
+        <a href="page_en_cours.html">Fonctionnalité</a>
+        <a href="page_en_cours.html">API</a>
+        <a href="page_en_cours.html">Contact</a>
+    </div>
+    <p style="margin-top: 1rem">&copy; NoteLand 2024</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container_detail = document.getElementById('container_detail');
+        const urlParams = new URLSearchParams(window.location.search);
+        const prodctId = urlParams.get('id');
+
+        async function affAnime(id){
+            try{
+                const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
+                let data = await response.json();
+                data = data.data
+                console.log(data);
+                container_detail.innerHTML = `<div style="margin-left: 2rem;">
+        <img src="${data.images.jpg.image_url}" alt="">
+    </div>
+
+    <div style="display: flex; gap: 10%; flex-direction: column; margin-left: 2rem;">
+        <div>Titre : ${data.title}</div>
+        <div> Genre : ${data.genres.map((item)=> item.name).join(", ")}</div>
+        <div> Theme : ${data.themes.map((item)=> item.name).join(", ")}</div>
+        <div>Synopsis : ${data.synopsis}</div>
+        <div>Note : ${data.score}</div>
+    </div>`
+            }catch(err){
+                console.log(err.message);
+            }
+
+
+        }
+
+
+
+
+
+        affAnime(prodctId);
+
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+header{
+    background-color: #8bcf75;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+a{
+    color: white;
+}
+
+a:hover{
+    color: black;
+    text-decoration: underline;
+}
+
+main{
+    background-color: #8fdf8f;
+    padding-top: 5rem
+}
+
+footer{
+    background-color: #8bcf75;
+    color: white;
+    text-align: center;
+}
+
+
+.footer_container{
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+}
